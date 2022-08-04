@@ -1,0 +1,30 @@
+.wrapper {
+    width: 100%;
+    min-height: 95px;
+    background-color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: var(--padding);
+    padding-left: var(--padding);
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userSvg {
+    margin-left: 10px;
+}
+
+.link {
+    margin-right: 15px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.link:focus, .link:hover {
+    text-decoration: underline;
+}
