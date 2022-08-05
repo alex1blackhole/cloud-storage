@@ -7,6 +7,8 @@ const {check, validationResult} = require("express-validator")
 const router = new Router()
 
 const authMiddleware = require('../middleware/auth.middleware')
+const fileService = require('../services/fileService')
+const File = require('../models/File')
 
 router.post(
     '/registration',
@@ -37,6 +39,7 @@ router.post(
             const user = new User({email, password: hashPassword,firstName,lastName})
 
             await user.save()
+            await fileService.createDir(new File({user: user.id, name:''}))
 
             return res.json({message: 'User was created'})
 
