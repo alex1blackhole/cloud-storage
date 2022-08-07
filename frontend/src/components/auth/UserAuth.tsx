@@ -1,16 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Input} from "../../ui/input/Input";
 import {Button} from "../../ui/button/Button";
 import styles from './registration.module.css';
 import {observer} from "mobx-react-lite";
 import User from "../../mobx/user";
+import {useNavigate} from "react-router-dom";
 
 const UserAuth = observer(() => {
+    let navigate = useNavigate();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [form, setData] = useState({
         email: '',
         password: '',
     })
+
+    useEffect(() => {
+        inputRef?.current?.focus();
+    }, [])
 
     useEffect(() => {
         setData({
@@ -35,6 +42,10 @@ const UserAuth = observer(() => {
         if (event) event.preventDefault()
 
         User.login(form.email, form.password)
+
+        setTimeout(() => {
+            navigate('/');
+        }, 200)
     }
 
     if (User.isAuth) {
@@ -55,6 +66,7 @@ const UserAuth = observer(() => {
                         placeholder='Email'
                         onChange={handleForm}
                         name="email"
+                        ref={inputRef}
                     />
                     <Input
                         placeholder='Password'

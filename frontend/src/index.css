@@ -6,6 +6,8 @@
     --black: rgba(0, 0, 0,1);
     --gray: rgba(0, 0, 0,0.40);
     --green: #E2FBD7;
+    --red: #FF3A29;
+    --light-red: #FFE5D3;
     --padding: 20px;
     --radius: 10px;
 }
