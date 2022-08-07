@@ -18,7 +18,7 @@ const FileList = observer(() => {
             </div>
         )
     }
-    
+
     return (
         <div>
 

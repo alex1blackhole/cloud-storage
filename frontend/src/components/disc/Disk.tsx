@@ -19,7 +19,7 @@ const Disk = observer(() => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.buttons}>
-                <Button className={styles.buttonBack} textStyle={styles.buttonBackText} text='Назад'/>
+                <Button className={styles.buttonBack} textStyle={styles.buttonBackText} text='Поделиться'/>
                 <Button className={styles.buttonCreateNew} textStyle={styles.buttonCreateNewText} text='Создать папку'/>
             </div>
 
