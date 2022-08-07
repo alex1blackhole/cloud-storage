@@ -16,6 +16,7 @@ const Disk = observer(() => {
 
     if (FileStorage.loading) return <div>loading...</div>
 
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.buttons}>
