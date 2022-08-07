@@ -1,0 +1,28 @@
+.wrapper {
+    padding-right: var(--padding);
+    padding-left: var(--padding);
+    margin-bottom: 20px;
+}
+
+.buttons {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.buttonBack {
+    margin-right: 10px;
+    background-color: var(--light-red);
+}
+
+.buttonBackText {
+    color: var(--red)
+}
+
+.buttonCreateNew {
+    background-color: var(--red);
+}
+
+.buttonCreateNewText {
+    color: var(--white);
+}

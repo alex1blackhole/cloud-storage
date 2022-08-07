@@ -3,12 +3,20 @@ import LogoSVG from "../../assets/svg/LogoSVG";
 import styles from "./navbar.module.css";
 import UserSvg from "../../assets/svg/user/userSVG";
 import {
-    Link
+    Link, useNavigate
 } from "react-router-dom";
 import {observer} from "mobx-react-lite";
 import User from "../../mobx/user";
 
 const Navbar = observer(() => {
+
+    let navigate = useNavigate();
+
+    function handleUserLogOut() {
+        User.logOut();
+        navigate('/');
+    }
+
     return (
         <div className={styles.wrapper}>
             <Link to='/'>
@@ -31,12 +39,7 @@ const Navbar = observer(() => {
                 {
                     User.isAuth &&
                     <>
-                        <div className={styles.link} onClick={User.logOut}>logout</div>
-                        <div className={styles.link}>{
-
-                            JSON.stringify(User.currentUser, null, 4)
-
-                        }</div>
+                        <div className={styles.link} onClick={handleUserLogOut}>logout</div>
                     </>
                 }
 

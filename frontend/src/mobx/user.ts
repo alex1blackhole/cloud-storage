@@ -29,14 +29,14 @@ class User {
         makeAutoObservable(this)
     }
 
-    public logOut = () => {
+    public logOut = async () => {
         this.userChangeAuth(false)
         this.currentUser = emptyUser
         localStorage.removeItem('token')
     }
 
-    public auth = () => {
-        apiAuth()
+    public auth = async () => {
+        await apiAuth()
             .then((response: any) => {
 
                 if (response.data?.token && response.data?.user) {
@@ -48,9 +48,9 @@ class User {
             })
     }
 
-    public login = (email:string,password: string) => {
+    public login = async (email: string, password: string) => {
 
-        apiLogin(email, password)
+        await apiLogin(email, password)
             .then((response: any) => {
                 console.log(response)
 

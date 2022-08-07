@@ -1,0 +1,31 @@
+.wrapper {
+    margin-bottom: 20px;
+}
+
+.header {
+    display: grid;
+
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    background-color: var(--white);
+    border-radius: var(--radius);
+
+    grid-template-columns: 1fr 4fr repeat(4, 1fr);
+}
+
+.name {
+    grid-column-start: 2;
+}
+
+.date {
+    grid-column-start: 5;
+    justify-self: center;
+}
+
+.size {
+    grid-column-start: 6;
+    justify-self: center;
+}
+
+

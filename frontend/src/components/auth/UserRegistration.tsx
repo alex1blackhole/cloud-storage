@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Input} from "../../ui/input/Input";
 import {Button} from "../../ui/button/Button";
 import styles from './registration.module.css';
 import apiRegistration from "../../api/auth/registration";
 
 const UserRegistration = () => {
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [form, setData] = useState({
         firstName: '',
@@ -12,6 +13,11 @@ const UserRegistration = () => {
         email: '',
         password: '',
     })
+
+
+    useEffect(() => {
+        inputRef?.current?.focus();
+    }, [])
 
     const handleForm = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const target = event.target;
@@ -44,6 +50,7 @@ const UserRegistration = () => {
                         placeholder='First Name'
                         onChange={handleForm}
                         name="firstName"
+                        ref={inputRef}
                     />
                     <Input
                         placeholder='Last Name'

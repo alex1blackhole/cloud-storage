@@ -7,8 +7,8 @@ import User from "./mobx/user";
 function App() {
 
     useEffect(() => {
-        User.auth();
-    })
+        User.auth()
+    },[])
 
     return (
         <BrowserRouter>
