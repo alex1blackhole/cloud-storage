@@ -1,0 +1,11 @@
+.button {
+    background-color: var(--red);
+}
+
+.buttonText {
+    color: var(--white);
+}
+
+.wrapper {
+    width: 450px;
+}

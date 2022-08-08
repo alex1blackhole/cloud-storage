@@ -401,3 +401,9 @@ template {
 [hidden] {
     display: none;
 }
+
+.react-responsive-modal-root .react-responsive-modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

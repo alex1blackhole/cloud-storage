@@ -5,7 +5,7 @@ class FileService {
 
     createDir(file) {
 
-        const filePath = path.join(__dirname, `../files/${file.user}/${file.path}`)
+        const filePath = path.sep(__dirname, `../files/${file.user}/${file.path}`)
 
         return new Promise((resolve, reject) => {
             try {
@@ -26,4 +26,5 @@ class FileService {
 
 
 module.exports = new FileService();
+
 

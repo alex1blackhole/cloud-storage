@@ -14,11 +14,11 @@ const FileList = observer(() => {
     if(isEmpty) {
         return  (
             <div>
-                You don't have files and folders
+                You don't have any files and folders
             </div>
         )
     }
-    
+
     return (
         <div>
 
