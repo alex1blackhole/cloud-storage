@@ -1,6 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import apiGetFiles from "../api/files/getFiles";
 import {isArray} from "../utils/isArray";
+import apiCreateDir from "../api/files/createDir";
 
 class FileStorage {
 
@@ -16,13 +17,22 @@ class FileStorage {
     getFilesFromApi = async () => {
         const response = await apiGetFiles(this.currentDir);
 
-        if(isArray(response?.data)) this.setFiles(response?.data)
+        if (isArray(response?.data)) this.setFiles(response?.data)
 
         this.loading = false;
     }
 
+    createNewDirectory = async (name: string) => {
+
+        await apiCreateDir(this.currentDir, name)
+            .then((r: any) => this.setFiles(r?.data));
+    }
+
     setFiles = (files: any) => {
-        this.files = files;
+        if(isArray(files)) {
+            // @ts-ignore
+            this.files = [...this.files, ...files];
+        }
     }
 
     setDir = (dir: any) => {
