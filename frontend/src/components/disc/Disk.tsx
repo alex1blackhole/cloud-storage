@@ -2,11 +2,11 @@ import React, {useEffect, useState} from 'react';
 import styles from './disk.module.css'
 import {Button} from '../../ui/button/Button';
 import FileList from "../fileList/FileList";
-import FileStorage from '../../mobx/file'
 import {observer} from "mobx-react-lite";
 import User from "../../mobx/user";
 import {Modal} from "../../ui/modal/Modal";
 import FormCreateDIr from "../formCreateDir/FormCreateDIr";
+import {FileStorage} from "../../mobx/file";
 
 const Disk = observer(() => {
 
@@ -15,6 +15,10 @@ const Disk = observer(() => {
     useEffect(() => {
         FileStorage.getFilesFromApi();
     }, [])
+
+    const handleReset = () => {
+        FileStorage.clear();
+    };
 
     const handleModalOpen = () => {
         setIsOpenModal(true);
@@ -30,15 +34,14 @@ const Disk = observer(() => {
 
     if (!User.isAuth) return null
 
-    if (FileStorage.loading) return <div>loading...</div>
-
     return (
         <div className={styles.wrapper}>
             <div className={styles.buttons}>
                 <Button
                     className={styles.buttonBack}
                     textStyle={styles.buttonBackText}
-                    text='Поделиться'
+                    onClick={handleReset}
+                    text='Сбросить'
                 />
                 <Button
                     className={styles.buttonCreateNew}
@@ -48,7 +51,11 @@ const Disk = observer(() => {
                 />
             </div>
 
-            <FileList/>
+            {
+                FileStorage.loading
+                    ? <div>loading...</div>
+                    : <FileList/>
+            }
 
             {
                 isOpenModal &&

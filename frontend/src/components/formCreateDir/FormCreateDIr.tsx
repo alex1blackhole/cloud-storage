@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Input} from "../../ui/input/Input";
 import {Button} from "../../ui/button/Button";
-import FileStorage from '../../mobx/file'
+import {FileStorage} from '../../mobx/file'
 
 import styles from './formCreateDir.module.css'
 

@@ -1,23 +1,38 @@
-import {makeAutoObservable} from "mobx";
+import {autorun, makeAutoObservable} from "mobx";
 import apiGetFiles from "../api/files/getFiles";
-import {isArray, isObject} from "../utils/isArray";
 import apiCreateDir from "../api/files/createDir";
+import {isArray, isObject, isString} from "../utils/isArray";
+import {IFile} from "../ui/file/FileIU";
 
-class FileStorage {
+type IDir = null | string
+
+
+class File {
 
     files = [];
     loading = true;
 
-    currentDir = ''
+    currentDir: IDir = null
 
     constructor() {
         makeAutoObservable(this)
     }
 
+    openDirectory = async () => {
+
+        this.loading = true;
+
+        const response = await apiGetFiles(this.currentDir);
+
+        this.files = response?.data;
+
+        this.loading = false;
+    }
+
     getFilesFromApi = async () => {
         const response = await apiGetFiles(this.currentDir);
 
-        if (isArray(response?.data)) this.setFiles(response?.data)
+        if (isArray(response?.data)) this.updateFiles(response?.data)
 
         this.loading = false;
     }
@@ -25,11 +40,11 @@ class FileStorage {
     createNewDirectory = async (name: string) => {
         this.loading = true;
         await apiCreateDir(this.currentDir, name)
-            .then((r: any) => this.setFiles(r?.data))
+            .then((r: any) => this.updateFiles(r?.data))
             .then(() => this.loading = false);
     }
 
-    setFiles = (files: any) => {
+    updateFiles = (files: any) => {
 
         if (isArray(files)) {
             // @ts-ignore
@@ -46,13 +61,25 @@ class FileStorage {
         this.currentDir = dir;
     }
 
-    clear = () => {
-        this.files = [];
+    setCurrentDir = (file: IFile) => {
 
-        this.currentDir = ''
+        if (file.type === 'dir') {
+            this.currentDir = file._id
+        }
     }
 
+    clear = async () => {
+        this.currentDir = ''
+
+        await this.getFilesFromApi();
+    }
 }
 
 
-export default new FileStorage();
+export const FileStorage = new File();
+
+autorun(() => {
+    if (isString(FileStorage.currentDir)) {
+        FileStorage.openDirectory();
+    }
+})

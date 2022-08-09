@@ -1,12 +1,18 @@
 import React from 'react';
 import styles from './fileList.module.css';
-import FileStorage from '../../mobx/file'
-import File, {IFile} from "../../ui/file/file";
+import {FileStorage} from '../../mobx/file'
+import FileIU, {IFile} from "../../ui/file/FileIU";
 import {observer} from "mobx-react-lite";
 
 const FileList = observer(() => {
 
-    const filesRender = FileStorage?.files.map( (file: IFile) => <File key={file._id} {...file} /> )
+    const filesRender = FileStorage?.files.map( (file: IFile) =>
+        <FileIU
+            key={file._id}
+            callback={ () => FileStorage.setCurrentDir(file)}
+            {...file}
+        />
+    )
 
     const isEmpty = FileStorage?.files.length === 0;
 
