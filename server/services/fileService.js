@@ -3,9 +3,9 @@ const path = require("path");
 
 class FileService {
 
-    createDir(file) {
+    createDir(req, file) {
 
-        const filePath = path.sep(__dirname, `../files/${file.user}/${file.path}`)
+        const filePath = this.getPath(req,file)
 
         return new Promise((resolve, reject) => {
             try {
@@ -21,6 +21,12 @@ class FileService {
         })
 
     }
+
+
+    getPath(req, file) {
+        return req.filePath + '\\' + file.user + '\\' + file.path
+    }
+
 
 }
 

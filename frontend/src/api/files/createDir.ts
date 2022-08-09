@@ -6,12 +6,12 @@ import {GET_FILES} from "../../constants/api";
  * api for creating new directory
  */
 
-async function apiCreateDir(dirId: string, name: string): Promise<AxiosResponse<any, any> | undefined> {
+async function apiCreateDir(dirId: string = '', name: string): Promise<AxiosResponse<any, any> | undefined> {
     try {
         return await axios.post(GET_FILES, {
             name,
-            parent: dirId,
             type: 'dir'
+            //parent: dirId,
         }, {
             headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
         });
