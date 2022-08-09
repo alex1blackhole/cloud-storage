@@ -10,7 +10,6 @@ const FileList = observer(() => {
 
     const isEmpty = FileStorage?.files.length === 0;
 
-
     if(isEmpty) {
         return  (
             <div>

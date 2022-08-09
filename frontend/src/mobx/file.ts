@@ -1,6 +1,6 @@
 import {makeAutoObservable} from "mobx";
 import apiGetFiles from "../api/files/getFiles";
-import {isArray} from "../utils/isArray";
+import {isArray, isObject} from "../utils/isArray";
 import apiCreateDir from "../api/files/createDir";
 
 class FileStorage {
@@ -23,15 +23,22 @@ class FileStorage {
     }
 
     createNewDirectory = async (name: string) => {
-
+        this.loading = true;
         await apiCreateDir(this.currentDir, name)
-            .then((r: any) => this.setFiles(r?.data));
+            .then((r: any) => this.setFiles(r?.data))
+            .then(() => this.loading = false);
     }
 
     setFiles = (files: any) => {
-        if(isArray(files)) {
+
+        if (isArray(files)) {
             // @ts-ignore
             this.files = [...this.files, ...files];
+        }
+
+        if (isObject(files)) {
+            // @ts-ignore
+            this.files = [...this.files, files];
         }
     }
 
