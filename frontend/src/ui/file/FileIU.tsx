@@ -5,16 +5,17 @@ import FileSVG from "../../assets/svg/FileSVG";
 import getShortDate from "../../utils/getShortDate";
 
 export interface IFile {
-    _id: number;
+    _id: string;
     name: string;
-    type: string;
+    type: 'dir' | '';
     size: string;
     date: string;
+    callback?(): void;
 }
 
-const File = ({_id, name, type, size, date}: IFile) => {
+const FileIU = ({_id, name, type, size, date, callback}: IFile) => {
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} onClick={callback}>
 
             {
                 type === 'dir'
@@ -29,4 +30,4 @@ const File = ({_id, name, type, size, date}: IFile) => {
     );
 };
 
-export default React.memo(File);
+export default React.memo(FileIU);

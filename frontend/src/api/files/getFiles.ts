@@ -7,10 +7,10 @@ import {GET_FILES} from "../../constants/api";
  *
  * @param dirId
  */
-async function apiGetFiles(dirId: string): Promise<AxiosResponse<any, any> | undefined> {
+async function apiGetFiles(dirId: null | string): Promise<AxiosResponse<any, any> | undefined> {
     try {
-        return  await axios.get(`${GET_FILES}${dirId ? `?parent=${dirId}` : ''}`, {
-          headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+        return await axios.get(`${GET_FILES}${dirId ? `?parent=${dirId}` : ''}`, {
+            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
         });
 
     } catch (e) {
