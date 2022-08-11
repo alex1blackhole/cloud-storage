@@ -36,7 +36,8 @@ const UserRegistration = () => {
         if (event) event.preventDefault()
 
         apiRegistration(form.email, form.password, form.firstName, form.lastName)
-            .then( response => console.log(response))
+            .then(response => console.log(response))
+            .catch(e => console.log(e))
 
     }
 

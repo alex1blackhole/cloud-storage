@@ -5,6 +5,7 @@ import FileSVG from "../../assets/svg/FileSVG";
 import getShortDate from "../../utils/getShortDate";
 
 export interface IFile {
+    childs: any;
     _id: string;
     name: string;
     type: 'dir' | '';

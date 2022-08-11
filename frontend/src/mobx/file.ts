@@ -6,10 +6,9 @@ import {IFile} from "../ui/file/FileIU";
 
 type IDir = null | string
 
-
 class File {
 
-    files = [];
+    files: IFile[] = [];
     loading = true;
 
     currentDir: IDir = null
@@ -24,7 +23,7 @@ class File {
 
         const response = await apiGetFiles(this.currentDir);
 
-        this.files = response?.data;
+        this.files = response as any;
 
         this.loading = false;
     }
@@ -32,7 +31,9 @@ class File {
     getFilesFromApi = async () => {
         const response = await apiGetFiles(this.currentDir);
 
-        if (isArray(response?.data)) this.updateFiles(response?.data)
+        this.files = [];
+
+        if (isArray(response)) this.updateFiles(response)
 
         this.loading = false;
     }
@@ -70,16 +71,15 @@ class File {
 
     clear = async () => {
         this.currentDir = ''
+        this.files = []
 
         await this.getFilesFromApi();
     }
 }
 
-
 export const FileStorage = new File();
-
-autorun(() => {
-    if (isString(FileStorage.currentDir)) {
-        FileStorage.openDirectory();
-    }
-})
+// autorun(() => {
+//      if (isString(FileStorage.currentDir)) {
+//          FileStorage.openDirectory();
+//      }
+// })

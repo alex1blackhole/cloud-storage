@@ -1,5 +1,5 @@
-import axios, {AxiosResponse} from "axios";
 import {GET_FILES} from "../../constants/api";
+import {api} from "../api";
 
 /**
  *
@@ -7,17 +7,9 @@ import {GET_FILES} from "../../constants/api";
  *
  * @param dirId
  */
-async function apiGetFiles(dirId: null | string): Promise<AxiosResponse<any, any> | undefined> {
-    try {
-        return await axios.get(`${GET_FILES}${dirId ? `?parent=${dirId}` : ''}`, {
-            headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
-        });
+async function apiGetFiles(dirId: null | string) {
+    return await api.get(`${GET_FILES}${dirId ? `?parent=${dirId}` : ''}`);
 
-    } catch (e) {
-        console.log('apiLogin error', e)
-        // @ts-ignore
-        return e
-    }
 }
 
 
