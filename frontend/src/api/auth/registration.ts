@@ -1,6 +1,5 @@
-import axios, {AxiosResponse} from "axios";
 import {AUTH_REGISTRATION} from "../../constants/api";
-
+import {api} from "../api";
 
 /**
  *
@@ -16,21 +15,14 @@ async function apiRegistration(
     password: string,
     firstName: string,
     lastName: string
-): Promise<AxiosResponse<any, any> | undefined> {
-    try {
-        return await axios.post(AUTH_REGISTRATION, {
-            email: email,
-            password: password,
-            firstName: firstName,
-            lastName: lastName,
-        });
+) {
+    return await api.post(AUTH_REGISTRATION, {
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+    });
 
-    } catch (e) {
-        console.log('UserRegistration error', e)
-        // @ts-ignore
-        return e
-
-    }
 }
 
 

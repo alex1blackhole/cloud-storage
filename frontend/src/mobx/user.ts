@@ -39,28 +39,27 @@ class User {
         await apiAuth()
             .then((response: any) => {
 
-                if (response.data?.token && response.data?.user) {
-                    localStorage.setItem('token', response.data.token)
+                if (response?.token && response?.user) {
+                    localStorage.setItem('token', response.token)
                     this.userChangeAuth(true)
-                    this.currentUser = response.data?.user
+                    this.currentUser = response?.user
                 }
 
             })
+            .catch(e => console.log(e.message))
     }
 
     public login = async (email: string, password: string) => {
 
         await apiLogin(email, password)
             .then((response: any) => {
-                console.log(response)
-
-                if (response.data?.token && response.data?.user) {
-                    localStorage.setItem('token', response.data.token)
+                if (response?.token && response?.user) {
+                    localStorage.setItem('token', response.token)
                     this.userChangeAuth(true)
-                    this.currentUser = response.data?.user
+                    this.currentUser = response?.user
                 }
-
             })
+            .catch(e => console.log(e.message))
     }
 
     private userChangeAuth = (authStatus: boolean) => {
