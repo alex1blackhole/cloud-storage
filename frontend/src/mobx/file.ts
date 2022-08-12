@@ -1,12 +1,24 @@
-import {autorun, makeAutoObservable} from "mobx";
+import {makeAutoObservable} from "mobx";
 import apiGetFiles from "../api/files/getFiles";
 import apiCreateDir from "../api/files/createDir";
-import {isArray, isObject, isString} from "../utils/isArray";
+import {isArray, isObject} from "../utils/isArray";
 import {IFile} from "../ui/file/FileIU";
 
 type IDir = null | string
 
-class File {
+interface IFileClass {
+    getFilesFromApi(pathName?: string): void;
+
+    createNewDirectory(name: string): void;
+
+    updateFiles(files: any): void;
+
+    setCurrentDir(file: IFile): void;
+
+    clear(): void;
+}
+
+class File implements IFileClass {
 
     files: IFile[] = [];
     loading = true;
@@ -17,19 +29,8 @@ class File {
         makeAutoObservable(this)
     }
 
-    openDirectory = async () => {
-
-        this.loading = true;
-
-        const response = await apiGetFiles(this.currentDir);
-
-        this.files = response as any;
-
-        this.loading = false;
-    }
-
-    getFilesFromApi = async () => {
-        const response = await apiGetFiles(this.currentDir);
+    getFilesFromApi = async (pathName = '') => {
+        const response = await apiGetFiles(pathName ?? this.currentDir);
 
         this.files = [];
 
@@ -41,7 +42,7 @@ class File {
     createNewDirectory = async (name: string) => {
         this.loading = true;
         await apiCreateDir(this.currentDir, name)
-            .then((r: any) => this.updateFiles(r?.data))
+            .then((res: any) => this.updateFiles(res))
             .then(() => this.loading = false);
     }
 
@@ -53,13 +54,10 @@ class File {
         }
 
         if (isObject(files)) {
+
             // @ts-ignore
             this.files = [...this.files, files];
         }
-    }
-
-    setDir = (dir: any) => {
-        this.currentDir = dir;
     }
 
     setCurrentDir = (file: IFile) => {
@@ -78,8 +76,3 @@ class File {
 }
 
 export const FileStorage = new File();
-// autorun(() => {
-//      if (isString(FileStorage.currentDir)) {
-//          FileStorage.openDirectory();
-//      }
-// })
