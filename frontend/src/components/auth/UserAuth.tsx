@@ -72,6 +72,7 @@ const UserAuth = observer(() => {
                         placeholder='Password'
                         onChange={handleForm}
                         name="password"
+                        type='password'
                     />
                 </div>
                 <Button

@@ -9,7 +9,6 @@ import {api} from "../api";
  */
 async function apiGetFiles(dirId: null | string) {
     return await api.get(`${GET_FILES}${dirId ? `?parent=${dirId}` : ''}`);
-
 }
 
 

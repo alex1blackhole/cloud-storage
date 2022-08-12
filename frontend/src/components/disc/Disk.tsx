@@ -7,17 +7,47 @@ import User from "../../mobx/user";
 import {Modal} from "../../ui/modal/Modal";
 import FormCreateDIr from "../formCreateDir/FormCreateDIr";
 import {FileStorage} from "../../mobx/file";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Disk = observer(() => {
 
+    let location = useLocation();
+    let navigate = useNavigate();
+
     const [isOpenModal, setIsOpenModal] = useState(false);
 
+    function getFolderPathname(location: string) {
+
+        const parsedPathname = location.split('/');
+
+        switch (parsedPathname.length) {
+            /**
+             * папка зашли внутри
+             */
+            case 4:
+                return parsedPathname[parsedPathname.length - 1]
+            /**
+             * просто компонент папок
+             */
+            case 2:
+                return ''
+
+            default:
+                return ''
+
+        }
+    }
+
     useEffect(() => {
-        FileStorage.getFilesFromApi();
-    }, [])
+        if (User.isAuth) {
+            FileStorage.getFilesFromApi(getFolderPathname(location.pathname))
+        }
+    }, [User.isAuth,location])
+
 
     const handleReset = () => {
         FileStorage.clear();
+        navigate('/drive')
     };
 
     const handleModalOpen = () => {
