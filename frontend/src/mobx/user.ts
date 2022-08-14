@@ -20,7 +20,14 @@ const emptyUser = {
     usedSpace: 0,
 }
 
-class User {
+
+interface IUserClass {
+    logOut(): void;
+    auth(): void;
+    login(email: string, password: string): void;
+}
+
+class User implements IUserClass{
     isAuth: boolean = false;
 
     currentUser: IUser = emptyUser

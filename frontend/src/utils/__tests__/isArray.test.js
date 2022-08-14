@@ -1,4 +1,4 @@
-import {isArray} from "./isArray";
+import {isArray, isObject, isString} from "../isArray";
 
 describe('isArray util func', () => {
 
@@ -39,3 +39,30 @@ describe('isArray util func', () => {
     });
 
 })
+
+describe('isObject util func', () => {
+
+    test('correct way', () => {
+        expect(isObject({})).toBe(true);
+    });
+
+
+    test('incorrect way', () => {
+        expect(isObject([])).toBe(false);
+    });
+
+})
+
+describe('isString util func', () => {
+
+    test('correct way', () => {
+        expect(isString('str')).toBe(true);
+    });
+
+
+    test('incorrect way', () => {
+        expect(isString(1)).toBe(false);
+    });
+
+})
+
