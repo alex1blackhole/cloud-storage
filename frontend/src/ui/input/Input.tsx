@@ -14,15 +14,17 @@ export interface IInputProps
     name?: string;
     type?: string;
     error?: string;
+    multiple?: boolean;
 }
 
 export const Input = forwardRef(
     (
-        {className = '', autoComplete, name, type, error, ...rest}: IInputProps,
+        {className = '', autoComplete, name, type, error,multiple, ...rest}: IInputProps,
         ref: ForwardedRef<HTMLInputElement>
     ): JSX.Element => {
         return (
             <input
+                multiple={multiple}
                 className={`${styles.wrapper} ${className}`}
                 autoComplete={autoComplete}
                 data-testid="test-input"

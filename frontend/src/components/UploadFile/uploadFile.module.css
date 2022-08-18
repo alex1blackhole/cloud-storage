@@ -1,0 +1,53 @@
+.wrapper {
+    display: grid;
+    position: relative;
+    padding: 15px 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    background-color: var(--light-red);
+    border-radius: var(--radius);
+    justify-content: center;
+}
+
+.loading {
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--green);
+    position: absolute;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    border-radius: var(--radius);
+}
+
+.wrapper:hover .svg, .wrapper:focus .svg {
+    fill: var(--white);
+}
+
+.input {
+    top: 0;
+    left: 0;
+    width: 100%;
+    cursor: pointer;
+    height: 100%;
+    z-index: 3;
+    background-color: #DAD7FE;
+    position: absolute;
+    opacity: 0;
+}
+
+.svg {
+    transition: all 0.15s ease;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.text {
+    margin-right: 15px;
+}

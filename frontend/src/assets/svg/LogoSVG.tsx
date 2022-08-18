@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {SVGAttributes} from 'react';
 
-const LogoSVG = () => {
+const LogoSVG = (props: SVGAttributes<SVGElement>) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" >
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="none" {...props}>
             <path
                 fill="#000"
                 fillRule="evenodd"

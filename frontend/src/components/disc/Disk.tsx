@@ -6,8 +6,10 @@ import {observer} from "mobx-react-lite";
 import User from "../../mobx/user";
 import {Modal} from "../../ui/modal/Modal";
 import FormCreateDIr from "../formCreateDir/FormCreateDIr";
-import {FileStorage} from "../../mobx/file";
+import {FileStorage} from "../../mobx/FileStorage";
 import {useLocation, useNavigate} from "react-router-dom";
+import getFolderPathname from '../../utils/getFolderPathname';
+import UploadFile from "../UploadFile/UploadFile";
 
 const Disk = observer(() => {
 
@@ -16,33 +18,11 @@ const Disk = observer(() => {
 
     const [isOpenModal, setIsOpenModal] = useState(false);
 
-    function getFolderPathname(location: string) {
-
-        const parsedPathname = location.split('/');
-
-        switch (parsedPathname.length) {
-            /**
-             * папка зашли внутри
-             */
-            case 4:
-                return parsedPathname[parsedPathname.length - 1]
-            /**
-             * просто компонент папок
-             */
-            case 2:
-                return ''
-
-            default:
-                return ''
-
-        }
-    }
-
     useEffect(() => {
         if (User.isAuth) {
             FileStorage.getFilesFromApi(getFolderPathname(location.pathname))
         }
-    }, [User.isAuth,location])
+    }, [User.isAuth, location])
 
 
     const handleReset = () => {
@@ -66,6 +46,8 @@ const Disk = observer(() => {
 
     return (
         <div className={styles.wrapper}>
+
+
             <div className={styles.buttons}>
                 <Button
                     className={styles.buttonBack}
@@ -86,6 +68,8 @@ const Disk = observer(() => {
                     ? <div>loading...</div>
                     : <FileList/>
             }
+
+            <UploadFile />
 
             {
                 isOpenModal &&

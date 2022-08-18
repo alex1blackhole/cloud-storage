@@ -4,3 +4,4 @@ export const AUTH_LOGIN = 'auth/login'
 export const AUTH = 'auth/auth'
 
 export const GET_FILES = DOMAIN + 'files'
+export const UPLOAD_FILES = DOMAIN + 'files/upload'
