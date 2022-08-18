@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {SVGAttributes} from 'react';
 
-const CloseSVG = (props) => {
+const CloseSVG = (props: SVGAttributes<SVGElement>) => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none">
             <path

@@ -10,10 +10,9 @@ const corsMiddleware = require('./middleware/cors.middleware')
 const filepathMiddleware = require('./middleware/filepath.middleware')
 const path = require('path')
 
+app.use(fileUpload({}))
 app.use(corsMiddleware)
 app.use(filepathMiddleware(path.resolve(__dirname, 'files')))
-
-app.use(fileUpload({}))
 app.use(express.json())
 app.use("/api/auth", authRouter)
 app.use("/api/files", fileRouter)

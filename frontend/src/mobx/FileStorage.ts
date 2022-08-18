@@ -1,8 +1,10 @@
 import {makeAutoObservable} from "mobx";
 import apiGetFiles from "../api/files/getFiles";
 import apiCreateDir from "../api/files/createDir";
-import {isArray, isObject} from "../utils/isArray";
+import {definitions, isObject} from "../utils/definitions";
 import {IFile} from "../ui/file/FileIU";
+import apiUploadFiles from "../api/files/uploadFiles";
+import getFolderPathname from "../utils/getFolderPathname";
 
 type IDir = null | string
 
@@ -15,13 +17,17 @@ interface IFileClass {
 
     setCurrentDir(file: IFile): void;
 
+    uploadFiles(files: any, pathname: string): void;
+
     clear(): void;
 }
 
-class File implements IFileClass {
+class Store implements IFileClass {
 
     files: IFile[] = [];
     loading = true;
+    fileUploadingProgress: null | number = null;
+    fileUploadingStatus: null | string = null;
 
     currentDir: IDir = null
 
@@ -29,12 +35,20 @@ class File implements IFileClass {
         makeAutoObservable(this)
     }
 
+    updateFileUploadingProgress = (progress: number | null) => {
+        this.fileUploadingProgress = progress;
+    }
+
+    setFileUploadingStatus = (message: string | null) => {
+     this.fileUploadingStatus = message;
+    }
+
     getFilesFromApi = async (pathName = '') => {
         const response = await apiGetFiles(pathName ?? this.currentDir);
 
         this.files = [];
 
-        if (isArray(response)) this.updateFiles(response)
+        if (definitions(response)) this.updateFiles(response)
 
         this.loading = false;
     }
@@ -48,7 +62,7 @@ class File implements IFileClass {
 
     updateFiles = (files: any) => {
 
-        if (isArray(files)) {
+        if (definitions(files)) {
             // @ts-ignore
             this.files = [...this.files, ...files];
         }
@@ -67,6 +81,22 @@ class File implements IFileClass {
         }
     }
 
+
+    //TODO this.updateFileUploadingProgress(null)
+
+    uploadFiles = async (files: any, pathname: string) => {
+        await files.forEach((file: any) => {
+            apiUploadFiles(getFolderPathname(pathname), file)
+                .then(() => {
+                    console.log('finish')
+                    this.setFileUploadingStatus(null)
+                })
+                .catch((e) => {
+                    this.setFileUploadingStatus(e.response.data.message)
+                })
+        })
+    }
+
     clear = async () => {
         this.currentDir = ''
         this.files = []
@@ -75,4 +105,4 @@ class File implements IFileClass {
     }
 }
 
-export const FileStorage = new File();
+export const FileStorage = new Store();

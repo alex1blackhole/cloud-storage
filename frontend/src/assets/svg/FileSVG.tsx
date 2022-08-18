@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {SVGAttributes} from 'react';
 
-const FileSVG = (props) => {
+const FileSVG = (props: SVGAttributes<SVGElement>) => {
     return (
         <svg {...props} xmlns="http://www.w3.org/2000/svg" width="29" height="36" fill="none">
             <path

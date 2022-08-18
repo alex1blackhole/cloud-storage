@@ -2,6 +2,7 @@ const fileService = require('../services/fileService')
 const File = require('../models/File')
 const config = require("config")
 const fs = require('fs')
+const User = require("../models/User");
 
 class FileController {
 
@@ -55,9 +56,10 @@ class FileController {
             const file = req.files.file;
 
             const parent = await File.findOne({user: req.user.id, _id: req.body.parent})
-            const user = await User.findOne({_id:req.user.id})
 
-            if(user.usedSpace + file.size > user.diskSpace){
+            const user = await User.findOne({_id: req.user.id})
+
+            if (user.usedSpace + file.size > user.diskSpace) {
                 return res.status(400).json({message: "There is no space on the disk"})
             }
 
@@ -67,9 +69,9 @@ class FileController {
             let path;
 
             if (parent) {
-                path = `${config.get('filePath')}/${user._id}/${parent.path}/${file.name}`
+                path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`
             } else {
-                path = `${config.get('filePath')}/${user._id}/${file.name}`
+                path = `${config.get('filePath')}\\${user._id}\\${file.name}`
             }
 
             if(fs.existsSync(path)) {

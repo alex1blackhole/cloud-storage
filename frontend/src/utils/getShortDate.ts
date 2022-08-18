@@ -1,4 +1,4 @@
-import {isString} from "./isArray";
+import {isString} from "./definitions";
 
 function getShortDate(date: string) {
     if (isString(date)) return date.slice(0, 10)

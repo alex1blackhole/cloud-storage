@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './fileList.module.css';
-import {FileStorage} from '../../mobx/file'
+import {FileStorage} from '../../mobx/FileStorage'
 import FileIU, {IFile} from "../../ui/file/FileIU";
 import {observer} from "mobx-react-lite";
 import {useNavigate} from "react-router-dom";
+import FileListHeader from "./FileListHeader";
 
 const FileList = observer(() => {
     let navigate = useNavigate();
@@ -13,19 +13,20 @@ const FileList = observer(() => {
         navigate(`/drive/folders/${directory._id}`);
     }
 
-    const filesRender = FileStorage?.files.map( (file: IFile) =>
+    const filesRender = FileStorage?.files.map((file: IFile) =>
         <FileIU
             key={file._id}
-            callback={ () => handleFileClick(file)}
+            callback={() => handleFileClick(file)}
             {...file}
         />
     )
 
     const isEmpty = FileStorage?.files.length === 0;
 
-    if(isEmpty) {
-        return  (
+    if (isEmpty) {
+        return (
             <div>
+                <FileListHeader/>
                 You don't have any files and folders
             </div>
         )
@@ -34,11 +35,7 @@ const FileList = observer(() => {
     return (
         <div>
 
-            <div className={styles.header}>
-                <div className={styles.name}>Название</div>
-                <div className={styles.date}>дата</div>
-                <div className={styles.size}>размер</div>
-            </div>
+            <FileListHeader/>
 
             {filesRender}
 

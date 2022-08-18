@@ -1,4 +1,4 @@
-export function isArray(value: unknown): boolean {
+export function definitions(value: unknown): boolean {
     return Object.prototype.toString.call(value) === '[object Array]';
 }
 

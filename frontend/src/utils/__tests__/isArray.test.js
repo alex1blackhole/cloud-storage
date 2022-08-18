@@ -1,41 +1,41 @@
-import {isArray, isObject, isString} from "../isArray";
+import {definitions, isObject, isString} from "../definitions";
 
-describe('isArray util func', () => {
+describe('definitions util func', () => {
 
     test('пустой массив', () => {
-        expect(isArray([])).toBe(true);
+        expect(definitions([])).toBe(true);
     });
 
     test('массив цифр', () => {
-        expect(isArray([1,3,2])).toBe(true);
+        expect(definitions([1,3,2])).toBe(true);
     });
 
     test('массив объект', () => {
-        expect(isArray([{}])).toBe(true);
+        expect(definitions([{}])).toBe(true);
     });
 
     test('вызов с числом', () => {
-        expect(isArray(1)).toBe(false);
+        expect(definitions(1)).toBe(false);
     });
 
     test('вызов с объектом', () => {
-        expect(isArray({})).toBe(false);
+        expect(definitions({})).toBe(false);
     });
 
     test('вызов со строчкой', () => {
-        expect(isArray('string')).toBe(false);
+        expect(definitions('string')).toBe(false);
     });
 
     test('вызов с false', () => {
-        expect(isArray(false)).toBe(false);
+        expect(definitions(false)).toBe(false);
     });
 
     test('вызов с true', () => {
-        expect(isArray(true)).toBe(false);
+        expect(definitions(true)).toBe(false);
     });
 
     test('вызов с null', () => {
-        expect(isArray(null)).toBe(false);
+        expect(definitions(null)).toBe(false);
     });
 
 })
