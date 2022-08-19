@@ -18,7 +18,7 @@ function App() {
                 <Navbar/>
                 <AppRouter/>
                 <ToastContainer limit={2} style={{
-                    paddingTop:90
+                    paddingTop: 90
                 }}/>
             </div>
         </BrowserRouter>
