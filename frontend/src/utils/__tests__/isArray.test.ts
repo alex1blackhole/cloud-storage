@@ -1,41 +1,42 @@
-import {definitions, isObject, isString} from "../definitions";
+import type * as Utils from "../definitions"
+const { isArray, isObject, isString } = jest.requireActual<typeof Utils>("../definitions")
 
-describe('definitions util func', () => {
+describe('isArray util func', () => {
 
     test('пустой массив', () => {
-        expect(definitions([])).toBe(true);
+        expect(isArray([])).toBe(true);
     });
 
     test('массив цифр', () => {
-        expect(definitions([1,3,2])).toBe(true);
+        expect(isArray([1,3,2])).toBe(true);
     });
 
     test('массив объект', () => {
-        expect(definitions([{}])).toBe(true);
+        expect(isArray([{}])).toBe(true);
     });
 
     test('вызов с числом', () => {
-        expect(definitions(1)).toBe(false);
+        expect(isArray(1)).toBe(false);
     });
 
     test('вызов с объектом', () => {
-        expect(definitions({})).toBe(false);
+        expect(isArray({})).toBe(false);
     });
 
     test('вызов со строчкой', () => {
-        expect(definitions('string')).toBe(false);
+        expect(isArray('string')).toBe(false);
     });
 
     test('вызов с false', () => {
-        expect(definitions(false)).toBe(false);
+        expect(isArray(false)).toBe(false);
     });
 
     test('вызов с true', () => {
-        expect(definitions(true)).toBe(false);
+        expect(isArray(true)).toBe(false);
     });
 
     test('вызов с null', () => {
-        expect(definitions(null)).toBe(false);
+        expect(isArray(null)).toBe(false);
     });
 
 })
@@ -65,4 +66,3 @@ describe('isString util func', () => {
     });
 
 })
-
