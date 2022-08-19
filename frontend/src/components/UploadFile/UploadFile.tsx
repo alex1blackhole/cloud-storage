@@ -6,16 +6,39 @@ import styles from './uploadFile.module.css';
 import {observer} from "mobx-react-lite";
 import {FileStorage} from "../../mobx/FileStorage";
 import { isNumber } from '../../utils/definitions';
+import {DropTargetMonitor, useDrop} from "react-dnd";
+import {NativeTypes} from "react-dnd-html5-backend";
 
 const UploadFile = observer(() => {
 
     let location = useLocation();
 
+    const [{canDrop, isOver}, drop] = useDrop(
+        () => ({
+            accept: [NativeTypes.FILE],
+            drop(item: { files: any[] }) {
+              console.log(item)
+            },
+            collect: (monitor: DropTargetMonitor) => {
+                const item = monitor.getItem() as any
+
+                if (item) {
+                    FileStorage.uploadFiles(item.files, location.pathname)
+                }
+
+                return {
+                    isOver: monitor.isOver(),
+                    canDrop: monitor.canDrop(),
+                }
+            },
+        }),
+        [],
+    )
+
     const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         // @ts-ignore
         FileStorage.uploadFiles([...event.target.files], location.pathname)
     };
-
 
     function getProgressText() {
 
@@ -39,9 +62,8 @@ const UploadFile = observer(() => {
         return ''
     }
 
-
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} ref={drop}>
 
             <div className={styles.loading}
                  style={{width: `${Number(FileStorage.fileUploadingProgress) ?? 0}%`}}>

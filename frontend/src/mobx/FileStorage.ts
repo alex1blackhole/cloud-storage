@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx";
 import apiGetFiles from "../api/files/getFiles";
 import apiCreateDir from "../api/files/createDir";
-import {definitions, isObject} from "../utils/definitions";
+import {isArray, isObject} from "../utils/definitions";
 import {IFile} from "../ui/file/FileIU";
 import apiUploadFiles from "../api/files/uploadFiles";
 import getFolderPathname from "../utils/getFolderPathname";
@@ -48,7 +48,7 @@ class Store implements IFileClass {
 
         this.files = [];
 
-        if (definitions(response)) this.updateFiles(response)
+        if (isArray(response)) this.updateFiles(response)
 
         this.loading = false;
     }
@@ -62,7 +62,7 @@ class Store implements IFileClass {
 
     updateFiles = (files: any) => {
 
-        if (definitions(files)) {
+        if (isArray(files)) {
             // @ts-ignore
             this.files = [...this.files, ...files];
         }
