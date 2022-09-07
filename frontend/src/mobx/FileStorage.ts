@@ -5,11 +5,13 @@ import {isArray, isObject} from "../utils/definitions";
 import {IFile} from "../ui/file/FileIU";
 import apiUploadFiles from "../api/files/uploadFiles";
 import getFolderPathname from "../utils/getFolderPathname";
+import apiDownloadFile from "../api/files/download";
+import {log} from "util";
 
 type IDir = null | string
 
 interface IFileClass {
-    getFilesFromApi(pathName?: string): void;
+    getFilesFromApi(pathName?: string): Promise<void>;
 
     createNewDirectory(name: string): void;
 
@@ -40,7 +42,7 @@ class Store implements IFileClass {
     }
 
     setFileUploadingStatus = (message: string | null) => {
-     this.fileUploadingStatus = message;
+        this.fileUploadingStatus = message;
     }
 
     getFilesFromApi = async (pathName = '') => {
@@ -95,6 +97,17 @@ class Store implements IFileClass {
                     this.setFileUploadingStatus(e.response.data.message)
                 })
         })
+    }
+
+
+    delete = () => {
+        console.log('delete')
+    }
+
+    downloadFile = (fileId: string, fileName: string) => {
+        apiDownloadFile(fileId, fileName)
+            .then(r => console.log(r))
+            .catch(e => console.log(e))
     }
 
     clear = async () => {

@@ -4,6 +4,7 @@ import FileIU, {IFile} from "../../ui/file/FileIU";
 import {observer} from "mobx-react-lite";
 import {useNavigate} from "react-router-dom";
 import FileListHeader from "./FileListHeader";
+import styles from "./fileList.module.css";
 
 const FileList = observer(() => {
     let navigate = useNavigate();
@@ -13,11 +14,23 @@ const FileList = observer(() => {
         navigate(`/drive/folders/${directory._id}`);
     }
 
+    function handleDelete(event: React.MouseEvent) {
+        event.stopPropagation();
+        FileStorage.delete();
+    }
+
+    function handleDownload(event: React.MouseEvent,fileId: string, fileName: string) {
+        event.stopPropagation();
+        FileStorage.downloadFile(fileId,fileName);
+    }
+
     const filesRender = FileStorage?.files.map((file: IFile) =>
         <FileIU
             key={file._id}
-            callback={() => handleFileClick(file)}
             {...file}
+            callback={() => handleFileClick(file)}
+            handleDelete={ handleDelete}
+            handleDownload={handleDownload}
         />
     )
 
@@ -27,7 +40,9 @@ const FileList = observer(() => {
         return (
             <div>
                 <FileListHeader/>
-                You don't have any files and folders
+                <div className={styles.textListEmpty}>
+                    You don't have any files and folders
+                </div>
             </div>
         )
     }

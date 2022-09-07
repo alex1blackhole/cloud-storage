@@ -11,7 +11,15 @@ export interface IButtonProps
     onClick?: (event: React.MouseEvent) => void;
 }
 
-const ButtonComponent = ({className, text, isDisabled = false, onClick, textStyle, ...rest}: IButtonProps) => {
+const ButtonComponent = (
+    {
+        className,
+        text = '',
+        isDisabled = false,
+        onClick,
+        textStyle = '',
+        ...rest
+    }: IButtonProps) => {
     return (
         <button
             className={`${styles.wrapper} ${className}`}

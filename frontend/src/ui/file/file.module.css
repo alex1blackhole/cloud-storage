@@ -9,10 +9,33 @@
     cursor: pointer;
 }
 
-.wrapper:hover .name, .wrapper:focus .name{
+.wrapper:hover .name, .wrapper:focus .name {
     text-decoration: underline;
     color: var(--blue);
 }
+
+.wrapper:hover .date  {
+    grid-column-start: 3;
+}
+
+.wrapper:hover .size  {
+    grid-column-start: 4;
+}
+
+.wrapper:hover .button  {
+   display: block;
+}
+
+
+.wrapper:hover .download  {
+    grid-column-start: 5;
+}
+
+.wrapper:hover .delete  {
+    grid-column-start: 6;
+}
+
+
 
 .name {
 
@@ -24,6 +47,15 @@
 
 .type {
 
+}
+
+.button {
+    margin: 0 auto;
+    background-color: var(--light-red);
+    height: 30px;
+    display: none;
+    z-index: 3;
+    position: relative;
 }
 
 .size {
