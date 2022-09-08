@@ -1,24 +1,15 @@
-import {DOWNLOAD_FILE} from "../../constants/api";
+import {DELETE_FILE} from "../../constants/api";
 import {api} from "../api";
 import {IFile} from "../../ui/file/FileIU";
 
 /**
  *
- * download file from db
+ * delete file or directory from bd
  *
  * @param file
  */
 async function apiDeleteFile(file: IFile) {
-    const response =  await fetch(`${DOWNLOAD_FILE}?id=${file._id}` ,{
-        headers :{
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-    });
-
-
-    if(response.status === 200) {
-
-    }
+    await api.delete(DELETE_FILE + '?id=' + file._id)
 }
 
 export default apiDeleteFile;

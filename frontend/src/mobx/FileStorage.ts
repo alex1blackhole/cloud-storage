@@ -7,6 +7,7 @@ import apiUploadFiles from "../api/files/uploadFiles";
 import getFolderPathname from "../utils/getFolderPathname";
 import apiDownloadFile from "../api/files/download";
 import {log} from "util";
+import apiDeleteFile from "../api/files/delete";
 
 type IDir = null | string
 
@@ -99,13 +100,15 @@ class Store implements IFileClass {
         })
     }
 
-
-    delete = () => {
-        console.log('delete')
-    }
-
     downloadFile = (fileId: string, fileName: string) => {
         apiDownloadFile(fileId, fileName)
+            .then(r => console.log(r))
+            .catch(e => console.log(e))
+    }
+
+    deleteFile = (file: IFile) => {
+        console.log('delete')
+        apiDeleteFile(file)
             .then(r => console.log(r))
             .catch(e => console.log(e))
     }

@@ -18,10 +18,10 @@ class FileController {
 
             if (!parentFile) {
                 file.path = name;
-                await fileService.createDir(req,file)
+                await fileService.createDir(req, file)
             } else {
                 file.path = `${parentFile.path}/${file.name}`
-                await fileService.createDir(req,file);
+                await fileService.createDir(req, file);
                 parentFile.childs.push(file._id)
                 await parentFile.save();
             }
@@ -74,7 +74,7 @@ class FileController {
                 path = `${config.get('filePath')}\\${user._id}\\${file.name}`
             }
 
-            if(fs.existsSync(path)) {
+            if (fs.existsSync(path)) {
                 return res.status(400).json({message: "File is already exists"})
             }
 
@@ -82,13 +82,19 @@ class FileController {
 
             const type = file.name.split('.').pop();
 
+            let filePath = file.name
+
+            if (parent) {
+                filePath = parent.path + '\\' + file.name
+            }
+
             const dbFile = new File({
-                name:file.name,
+                name: file.name,
                 type,
                 size: file.size,
-                path:parent?.path,
+                path: filePath,
                 parent: parent?._id,
-                user:user._id
+                user: user._id
             })
 
 
@@ -109,19 +115,43 @@ class FileController {
 
             const file = await File.findOne({_id: req.query.id, user: req.user.id})
 
-            const path = `${config.get('filePath')}${req.user.id}${file.path}/${file.name}`
+            const path = `${config.get('filePath')}${req.user.id}/${file.path}`
 
-            console.log(  path)
+            console.log(path)
 
             if (fs.existsSync(path)) return res.download(path, file.name)
 
-            return res.status(400).json({message: 'download error1'})
+            return res.status(400).json({message: 'download error'})
 
         } catch (e) {
             console.log(e)
-            return res.status(500).json({message: "download file error2"})
+            return res.status(500).json({message: "download file error"})
         }
     }
+
+
+
+    async deleteFile(req, res) {
+        try {
+
+            const file = await File.findOne({_id: req.query.id, user: req.user.id})
+
+            if(!file) {
+                return res.status(400).json({message: 'file not found'})
+            }
+
+            fileService.deleteFile(req,file);
+
+            await file.remove()
+
+            return res.json({message:'file was deleted'})
+
+        } catch (e) {
+            console.log(e)
+            return res.status(400).json({message: "dir is not empty"})
+        }
+    }
+
 
 }
 
