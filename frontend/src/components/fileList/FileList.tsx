@@ -10,18 +10,20 @@ const FileList = observer(() => {
     let navigate = useNavigate();
 
     function handleFileClick(directory: IFile) {
-        FileStorage.setCurrentDir(directory);
-        navigate(`/drive/folders/${directory._id}`);
+        if (directory.type === 'dir') {
+            FileStorage.setCurrentDir(directory);
+            navigate(`/drive/folders/${directory._id}`);
+        }
     }
 
-    function handleDelete(event: React.MouseEvent) {
+    function handleDelete(event: React.MouseEvent, file: IFile) {
         event.stopPropagation();
-        FileStorage.delete();
+        FileStorage.deleteFile(file);
     }
 
-    function handleDownload(event: React.MouseEvent,fileId: string, fileName: string) {
+    function handleDownload(event: React.MouseEvent, fileId: string, fileName: string) {
         event.stopPropagation();
-        FileStorage.downloadFile(fileId,fileName);
+        FileStorage.downloadFile(fileId, fileName);
     }
 
     const filesRender = FileStorage?.files.map((file: IFile) =>
@@ -29,7 +31,7 @@ const FileList = observer(() => {
             key={file._id}
             {...file}
             callback={() => handleFileClick(file)}
-            handleDelete={ handleDelete}
+            handleDelete={(event) => handleDelete(event, file)}
             handleDownload={handleDownload}
         />
     )

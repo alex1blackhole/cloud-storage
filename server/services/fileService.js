@@ -5,7 +5,7 @@ class FileService {
 
     createDir(req, file) {
 
-        const filePath = this.getPath(req,file)
+        const filePath = this.getPath(req, file)
 
         return new Promise((resolve, reject) => {
             try {
@@ -22,9 +22,22 @@ class FileService {
 
     }
 
+    deleteFile(req, file) {
+
+
+        const path = this.getPath(req, file)
+
+        if (file.path === 'dir') {
+            fs.rmdirSync(path)
+        } else {
+            fs.unlinkSync(path)
+        }
+
+    }
+
 
     getPath(req, file) {
-        return req.filePath + '\\' + file.user + '\\' + file.path
+        return req.filePath + '/' + file.user + '/' + file.path
     }
 
 
