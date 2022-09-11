@@ -69,10 +69,11 @@ class FileController {
             let path;
 
             if (parent) {
-                path = `${config.get('filePath')}\\${user._id}\\${parent.path}\\${file.name}`
+                path = `${config.get('filePath')}${user._id}/${parent.path}/${file.name}`
             } else {
-                path = `${config.get('filePath')}\\${user._id}\\${file.name}`
+                path = `${config.get('filePath')}${user._id}/${file.name}`
             }
+
 
             if (fs.existsSync(path)) {
                 return res.status(400).json({message: "File is already exists"})
@@ -85,7 +86,7 @@ class FileController {
             let filePath = file.name
 
             if (parent) {
-                filePath = parent.path + '\\' + file.name
+                filePath = parent.path + '/' + file.name
             }
 
             const dbFile = new File({
@@ -128,8 +129,6 @@ class FileController {
             return res.status(500).json({message: "download file error"})
         }
     }
-
-
 
     async deleteFile(req, res) {
         try {

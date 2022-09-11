@@ -1,0 +1,9 @@
+.app {
+    display: flex;
+}
+
+.content {
+    padding-top: var(--padding);
+    padding-right: 30px;
+    flex: 1
+}

@@ -107,7 +107,7 @@ class Store implements IFileClass {
     }
 
     deleteFile = (file: IFile) => {
-        console.log('delete')
+        console.log('delete',file._id)
         apiDeleteFile(file)
             .then(r => console.log(r))
             .catch(e => console.log(e))

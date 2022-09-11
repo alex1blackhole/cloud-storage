@@ -1,6 +1,5 @@
 .wrapper {
-    padding-right: var(--padding);
-    padding-left: var(--padding);
+    width: 100%;
     margin-bottom: 20px;
 }
 
