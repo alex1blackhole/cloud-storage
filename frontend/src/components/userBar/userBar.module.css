@@ -1,0 +1,30 @@
+.wrapper {
+    width: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+    padding: 10px;
+    background-color: var(--white);
+    border-radius: var(--radius);
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.userSvg {
+    margin-left: 10px;
+}
+
+.link {
+    margin-right: 15px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.link:focus, .link:hover {
+    text-decoration: underline;
+}

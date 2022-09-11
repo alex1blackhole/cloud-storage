@@ -4,7 +4,9 @@ import {BrowserRouter} from "react-router-dom";
 import AppRouter from "./router/AppRouter";
 import User from "./mobx/user";
 import {ToastContainer} from 'react-toastify';
+import style from './app.module.css'
 import 'react-toastify/dist/ReactToastify.css';
+import Header from "./components/header/Header";
 
 function App() {
 
@@ -14,9 +16,12 @@ function App() {
 
     return (
         <BrowserRouter>
-            <div className="App">
+            <div className={style.app}>
                 <Navbar/>
-                <AppRouter/>
+               <div className={style.content}>
+                   <Header />
+                   <AppRouter/>
+               </div>
                 <ToastContainer limit={2} style={{
                     paddingTop: 90
                 }}/>

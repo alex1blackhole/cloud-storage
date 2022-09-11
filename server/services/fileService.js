@@ -24,17 +24,25 @@ class FileService {
 
     deleteFile(req, file) {
 
-
         const path = this.getPath(req, file)
 
-        if (file.path === 'dir') {
+        if (file.type === 'dir') {
+
             fs.rmdirSync(path)
+
+            // fs.rmdir(path, (err) => {
+            //
+            //     if (err) {
+            //         return console.log("error occurred in deleting directory", err);
+            //     }
+            //
+            //     console.log("Directory deleted successfully");
+            // });
+
         } else {
             fs.unlinkSync(path)
         }
-
     }
-
 
     getPath(req, file) {
         return req.filePath + '/' + file.user + '/' + file.path

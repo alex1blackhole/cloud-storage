@@ -1,53 +1,70 @@
 import React from 'react';
 import LogoSVG from "../../assets/svg/LogoSVG";
 import styles from "./navbar.module.css";
-import UserSvg from "../../assets/svg/user/userSVG";
 import {
-    Link, useNavigate
+    Link, useLocation
 } from "react-router-dom";
-import {observer} from "mobx-react-lite";
-import User from "../../mobx/user";
+import DashboardSVG from "../../assets/svg/DashboardSVG";
+import NavbarLinkUI from "../../ui/navbarLink/navbarLinkUI";
+import SettingsSVG from "../../assets/svg/SettingsSVG";
+import FolderSVG from "../../assets/svg/FolderSVG";
+import SharedSVG from "../../assets/svg/SharedSVG";
 
-const Navbar = observer(() => {
+const links = [
 
-    let navigate = useNavigate();
+    {
+        id: 1,
+        url: '/dashboard',
+        title: 'dashboard',
+        icon: <DashboardSVG/>
+    },
 
-    function handleUserLogOut() {
-        User.logOut();
-        navigate('/');
+    {
+        id: 2,
+        url: '/drive',
+        title: 'my files',
+        icon: <FolderSVG/>
+    },
+
+
+    {
+        id: 3,
+        url: '/shared',
+        title: 'shared files',
+        icon: <SharedSVG/>
+    },
+
+    {
+        id: 4,
+        url: '/settings',
+        title: 'settings',
+        icon: <SettingsSVG/>
     }
+
+]
+
+const Navbar = () => {
+
+    let location = useLocation();
+
+    const activeUrl = '/' + location.pathname.split('/')[1]
 
     return (
         <div className={styles.wrapper}>
+
             <Link to='/'>
-                <LogoSVG/>
+                <div className={styles.logo}>
+                    <LogoSVG/>
+                    <div>my-store</div>
+                </div>
             </Link>
-            <div className={styles.user}>
 
-                {
-                    !User.isAuth &&
-                    <>
-                        <Link to={'login'}>
-                            <div className={styles.link}>login</div>
-                        </Link>
-                        <Link to={'registration'}>
-                            <div className={styles.link}>sign in</div>
-                        </Link>
-                    </>
-                }
-
-                {
-                    User.isAuth &&
-                    <>
-                        <div className={styles.link} onClick={handleUserLogOut}>logout</div>
-                    </>
-                }
-
-                <UserSvg className={styles.userSvg}/>
-            </div>
+            {
+                links.map(link => <NavbarLinkUI key={link.id}  {...link} active={link.url === activeUrl}/>)
+            }
 
         </div>
     );
-});
+};
 
 export default Navbar;

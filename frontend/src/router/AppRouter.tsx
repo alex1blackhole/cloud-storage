@@ -10,6 +10,8 @@ import HomePage from "../pages/home/HomePage";
 import User from "../mobx/user";
 import Disk from "../components/disc/Disk";
 import {observer} from "mobx-react-lite";
+import Dashboard from "../pages/dashboard/dashboard";
+import Settings from "../pages/settings/settings";
 
 const AppRouter = observer(() => {
     return (
@@ -30,6 +32,9 @@ const AppRouter = observer(() => {
                 <>
                     <Route path='/drive' element={<Disk/>}/>
                     <Route path="/drive/folders/:name" element={<Disk />} />
+
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/settings" element={<Settings />} />
                 </>
             }
 
