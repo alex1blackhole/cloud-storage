@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Input} from "../../ui/input/Input";
 import {useLocation} from "react-router-dom";
 import FileUploadSVG from "../../assets/svg/FileUploadSVG";
-import styles from './uploadFile.module.css';
 import {observer} from "mobx-react-lite";
 import {FileStorage} from "../../mobx/FileStorage";
-import { isNumber } from '../../utils/definitions';
+import {isNumber} from '../../utils/definitions';
 import {DropTargetMonitor, useDrop} from "react-dnd";
 import {NativeTypes} from "react-dnd-html5-backend";
 
-const UploadFile = observer(() => {
+import styles from './uploadFile.module.css';
+import {Button} from 'src/ui/button/Button';
+
+
+const UploadFile = () => {
+
+    const inputRef = useRef<HTMLInputElement>(null);
 
     let location = useLocation();
 
@@ -17,7 +22,7 @@ const UploadFile = observer(() => {
         () => ({
             accept: [NativeTypes.FILE],
             drop(item: { files: any[] }) {
-              console.log(item)
+                console.log(item)
             },
             collect: (monitor: DropTargetMonitor) => {
                 const item = monitor.getItem() as any
@@ -35,14 +40,17 @@ const UploadFile = observer(() => {
         [],
     )
 
-    const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // @ts-ignore
-        FileStorage.uploadFiles([...event.target.files], location.pathname)
+    const handleFileInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
+
+        const files = event.target.files;
+
+        if (files) FileStorage.uploadFiles([files], location.pathname)
+
     };
 
     function getProgressText() {
 
-        if(FileStorage.fileUploadingStatus) {
+        if (FileStorage.fileUploadingStatus) {
             return FileStorage.fileUploadingStatus
         }
 
@@ -53,7 +61,7 @@ const UploadFile = observer(() => {
             }
 
 
-            if(FileStorage.fileUploadingProgress === 100) {
+            if (FileStorage.fileUploadingProgress === 100) {
                 return `File was successful uploaded, choose another file`
             }
 
@@ -62,28 +70,45 @@ const UploadFile = observer(() => {
         return ''
     }
 
+    function handleButtonClick() {
+        inputRef.current?.click();
+    }
+
     return (
-        <div className={styles.wrapper} ref={drop}>
+        <div className={styles.wrapper}>
 
-            <div className={styles.loading}
-                 style={{width: `${Number(FileStorage.fileUploadingProgress) ?? 0}%`}}>
-                {getProgressText()}
+            <div className={styles.inner} ref={drop}>
+
+                <div className={styles.loading}
+                     style={{width: `${Number(FileStorage.fileUploadingProgress) ?? 0}%`}}>
+                    {getProgressText()}
+                </div>
+
+                <div className={styles.row}>
+                    <FileUploadSVG className={styles.svg}/>
+                    <div className={styles.text}>Drag & Drop your files here</div>
+                </div>
+
+                <Input
+                    ref={inputRef}
+                    className={styles.input}
+                    type='file'
+                    multiple
+                    onChange={handleFileInput}
+                />
+
             </div>
 
-
-            <div className={styles.row}>
-                <div className={styles.text}>Drag files here</div>
-                <FileUploadSVG className={styles.svg}/>
-            </div>
-
-            <Input
-                className={styles.input}
-                type='file'
-                multiple
-                onChange={handleFileInput}
+            <Button
+                text={'Upload files'}
+                className={styles.button}
+                onClick={handleButtonClick}
+                textStyle={styles.buttonText}
+                icon={<FileUploadSVG  className={styles.buttonIcon}/>}
             />
+
         </div>
     );
-});
+};
 
-export default UploadFile;
+export default observer(UploadFile);

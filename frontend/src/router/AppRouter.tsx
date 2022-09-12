@@ -30,7 +30,7 @@ const AppRouter = observer(() => {
             {
                 User.isAuth &&
                 <>
-                    <Route path='/drive' element={<Disk/>}/>
+                    <Route path='/drive' element={<HomePage/>}/>
                     <Route path="/drive/folders/:name" element={<Disk />} />
 
                     <Route path="/dashboard" element={<Dashboard />} />
