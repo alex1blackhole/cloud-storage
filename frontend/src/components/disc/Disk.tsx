@@ -9,7 +9,6 @@ import FormCreateDIr from "../formCreateDir/FormCreateDIr";
 import {FileStorage} from "../../mobx/FileStorage";
 import {useLocation, useNavigate} from "react-router-dom";
 import getFolderPathname from '../../utils/getFolderPathname';
-import UploadFile from "../UploadFile/UploadFile";
 
 const Disk = observer(() => {
 
@@ -68,8 +67,6 @@ const Disk = observer(() => {
                     ? <div>loading...</div>
                     : <FileList/>
             }
-
-            <UploadFile />
 
             {
                 isOpenModal &&

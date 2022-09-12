@@ -133,3 +133,4 @@ dist
 .pnp.*
 /yarn.lock
 /.idea/
+./server/config/default.json

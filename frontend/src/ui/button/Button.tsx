@@ -7,6 +7,7 @@ export interface IButtonProps
     className?: string;
     text?: string;
     textStyle?: string;
+    icon?: JSX.Element;
     isDisabled?: boolean;
     onClick?: (event: React.MouseEvent) => void;
 }
@@ -15,6 +16,7 @@ const ButtonComponent = (
     {
         className,
         text = '',
+        icon,
         isDisabled = false,
         onClick,
         textStyle = '',
@@ -27,6 +29,7 @@ const ButtonComponent = (
             onClick={onClick}
             {...rest}
         >
+            {icon}
             <span className={`${styles.text} ${textStyle}`}>{text}</span>
         </button>
     );
