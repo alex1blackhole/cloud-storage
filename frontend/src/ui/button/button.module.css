@@ -8,7 +8,9 @@
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
 }
 
 .text {

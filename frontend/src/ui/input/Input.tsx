@@ -12,7 +12,7 @@ export interface IInputProps
     className?: string;
     autoComplete?: string;
     name?: string;
-    type?: string;
+    type?: 'text' | 'password' | 'email' | 'number' | 'tel' | 'file';
     error?: string;
     multiple?: boolean;
 }

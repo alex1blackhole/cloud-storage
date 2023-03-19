@@ -59,7 +59,6 @@ const UserAuth = observer(() => {
     return (
         <div className={styles.wrapper}>
             <div className={styles.title}>User login</div>
-
             <form onSubmit={handleSubmit} className={styles.form}>
                 <div className={styles.fields}>
                     <Input
